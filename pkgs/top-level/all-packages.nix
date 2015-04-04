@@ -2843,6 +2843,8 @@ let
 
   tiny8086 = callPackage ../applications/virtualization/8086tiny { };
 
+  tinyproxy = callPackage ../tools/networking/tinyproxy { };
+
   tlsdate = callPackage ../tools/networking/tlsdate { };
 
   tmpwatch = callPackage ../tools/misc/tmpwatch  { };
