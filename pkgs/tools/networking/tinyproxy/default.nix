@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     '';
     homepage = https://banu.com/tinyproxy/;
     maintainers = [ stdenv.lib.maintainers.pesterhazy ];
-    platforms = stdenv.lib.platforms.darwin;
+    platforms = stdenv.lib.platforms.unix;
     license = stdenv.lib.licenses.gpl2;
   };
 }
