@@ -1,6 +1,4 @@
-{ stdenv, requireFile, libelf, gcc, glibc, patchelf, unzip, rpmextract, libaio, makeWrapper }:
-
-with stdenv.lib;
+{ stdenv, requireFile, libelf, gcc, glibc, patchelf, unzip, rpmextract, libaio }:
 
 stdenv.mkDerivation rec {
   name = "oracle-instantclient-12.1.0.2.0-1";
@@ -50,11 +48,9 @@ stdenv.mkDerivation rec {
     sha256 = "16d87w1lii0ag47c8srnr7v4wfm9q4hy6gka8m3v6gp9cc065vam";
   };
 
-  buildInputs = [ glibc patchelf rpmextract makeWrapper ];
+  buildInputs = [ glibc patchelf rpmextract ];
 
-  buildCommand = let
-    libs = makeLibraryPath [ libaio ];
-  in ''
+  buildCommand = ''
     mkdir -p "${name}"
     cd "${name}"
     ${rpmextract}/bin/rpmextract "${srcBinary}"
@@ -62,17 +58,24 @@ stdenv.mkDerivation rec {
     ${rpmextract}/bin/rpmextract "${srcSqlplus}"
 
     mkdir -p "$out/"{bin,include,lib,demo}
-    cp usr/share/oracle/12.1/client64/demo/* "$out/demo"
-    cp usr/include/oracle/12.1/client64/* "$out/include"
-    cp usr/lib/oracle/12.1/client64/lib/* "$out/lib"
-    cp usr/lib/oracle/12.1/client64/bin/* "$out/bin"
+    mv "usr/share/oracle/12.1/client64/demo/"* "$out/demo/"
+    mv "usr/include/oracle/12.1/client64/"* "$out/include/"
+    mv "usr/lib/oracle/12.1/client64/lib/"* "$out/lib/"
+    mv "usr/lib/oracle/12.1/client64/bin/"* "$out/bin/"
     ln -s "$out/bin/sqlplus" "$out/bin/sqlplus64"
 
-    patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
-      "$out/bin/sqlplus"
+    for lib in $out/lib/lib*.so; do
+      test -f $lib || continue
+      chmod +x $lib
+      patchelf --force-rpath --set-rpath "$out/lib:${libaio}/lib" \
+               $lib
+    done
 
-    wrapProgram $out/bin/sqlplus --prefix LD_LIBRARY_PATH : $out/lib \
-                                 --prefix LD_LIBRARY_PATH : ${libaio}/lib \
+    for exe in $out/bin/sqlplus; do
+      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
+               --force-rpath --set-rpath "$out/lib:${libaio}/lib" \
+               $exe
+    done
   '';
 
   meta = with stdenv.lib; {
