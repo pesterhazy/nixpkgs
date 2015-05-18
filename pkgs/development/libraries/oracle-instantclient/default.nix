@@ -9,7 +9,9 @@ let requireSource = version: part: hash: (requireFile rec {
 
     http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
 
-    and add it to the Nix store with nix-store --add-fixed sha256 <FILE>.
+    and add it to the Nix store with the following command:
+
+    nix-prefetch-url file://${name} ${hash} --type sha256
 '';
   url = "http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html";
   sha256 = hash;
