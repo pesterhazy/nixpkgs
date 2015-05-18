@@ -1,52 +1,25 @@
 { stdenv, requireFile, libelf, gcc, glibc, patchelf, unzip, rpmextract, libaio }:
 
-stdenv.mkDerivation rec {
-  name = "oracle-instantclient-12.1.0.2.0-1";
+let requireSource = version: part: hash: (requireFile rec {
+  name = "oracle-instantclient12.1-${part}-${version}.x86_64.rpm";
+  message = ''
+    This Nix expression requires that ${name} already
+    be part of the store. Download the file
+    manually at
 
-  srcBinary = requireFile {
-    name = "oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm";
-    message = ''
-      This nix expression requires that ${name} is
-      already part of the store. Download the file
-      manally at
+    http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
 
-      http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
+    and add it to the Nix store with nix-store --add-fixed sha256 <FILE>.
+'';
+  url = "http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html";
+  sha256 = hash;
+}); in stdenv.mkDerivation rec {
+  version = "12.1.0.2.0-1";
+  name = "oracle-instantclient-${version}";
 
-      and add it to the nix store with nix-store --add-fixed sha256 <FILE>.
-    '';
-    url = "http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html";
-    sha256 = "f0e51e247cc3f210b950fd939ab1f696de9ca678d1eb179ba49ac73acb9a20ed";
-  };
-
-  srcDevel = requireFile {
-    name = "oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm";
-    message = ''
-      This nix expression requires that ${name} is
-      already part of the store. Download the file
-      manually at
-
-      http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
-
-      and add it to the nix store with nix-store --add-fixed sha256 <FILE>.
-    '';
-    url = "http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html";
-    sha256 = "13b638882f07d6cfc06c85dc6b9eb5cac37064d3d594194b6b09d33483a08296";
-  };
-
-  srcSqlplus = requireFile {
-    name = "oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm";
-    message = ''
-      This nix expression requires that ${name} is
-      already part of the store. Download the file
-      manually at
-
-      http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
-
-      and add it to the nix store with nix-store --add-fixed sha256 <FILE>.
-    '';
-    url = "http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html";
-    sha256 = "16d87w1lii0ag47c8srnr7v4wfm9q4hy6gka8m3v6gp9cc065vam";
-  };
+  srcBinary = (requireSource version "basic" "f0e51e247cc3f210b950fd939ab1f696de9ca678d1eb179ba49ac73acb9a20ed");
+  srcDevel = (requireSource version "devel" "13b638882f07d6cfc06c85dc6b9eb5cac37064d3d594194b6b09d33483a08296");
+  srcSqlplus = (requireSource version "sqlplus" "16d87w1lii0ag47c8srnr7v4wfm9q4hy6gka8m3v6gp9cc065vam");
 
   buildInputs = [ glibc patchelf rpmextract ];
 
