@@ -14469,6 +14469,28 @@ let
 
   };
 
+  cx_oracle = buildPythonPackage rec {
+    version = "5.1.2";
+    name = "cx_Oracle-${version}";
+    doCheck = false;
+
+    buildInputs = [ pkgs.oracle-instantclient pkgs.libaio ];
+
+    src = pkgs.fetchurl {
+      url = "http://freefr.dl.sourceforge.net/project/cx-oracle/${version}/${name}.tar.gz";
+      sha256 = "0xclwqfdzgisj56h5g4xgqf2yvlqq5zd036wimd3pnacxlmqdfkk";
+    };
+
+    prePatch = ''
+      substituteInPlace setup.py --replace "libclntsh.so.11.1" "libclntsh.so.12.1"
+    '';
+
+    preConfigure = ''
+    export ORACLE_HOME=${pkgs.oracle-instantclient}
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.oracle-instantclient}/lib:${pkgs.libaio}/lib
+    '';
+  };
+
   graphite_web = buildPythonPackage rec {
     name = "graphite-web-${version}";
     version = "0.9.12";
