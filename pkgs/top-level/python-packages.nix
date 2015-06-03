@@ -14470,9 +14470,15 @@ let
   };
 
   cx_oracle = buildPythonPackage rec {
+    libaio = pkgs.libaio;
+    oracle_instantclient = pkgs.oracle-instantclient;
+
     version = "5.1.2";
     name = "cx_Oracle-${version}";
+
     doCheck = false;
+    dontStrip = true;
+    dontPatchELF = true;
 
     buildInputs = [ pkgs.oracle-instantclient pkgs.libaio ];
 
@@ -14485,9 +14491,14 @@ let
       substituteInPlace setup.py --replace "libclntsh.so.11.1" "libclntsh.so.12.1"
     '';
 
+    postInstall = ''
+      find "$out" -type f -name \*.so | while read f; do
+        patchelf --force-rpath --set-rpath "$out/lib:${libaio}/lib:${oracle_instantclient}/lib" "$f"
+      done
+    '';
+
     preConfigure = ''
-    export ORACLE_HOME=${pkgs.oracle-instantclient}
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.oracle-instantclient}/lib:${pkgs.libaio}/lib
+      export ORACLE_HOME=${pkgs.oracle-instantclient}
     '';
   };
 
