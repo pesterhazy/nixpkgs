@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
 
   patchPhase =
     '' sed -i "src/parallel" -e's|/usr/bin/perl|${perl}/bin/perl|g'
+    patch src/parallel < ${./free.patch}
     '';
 
   preBuild =

@@ -1,0 +1,9 @@
+3823c3823,3828
+< 		"linux" => q{ print (1024*((grep /buffers.cache/, `free`)[0] =~ /buffers.cache:\s+\S+\s+(\S+)/)[0]) },
+---
+> 
+>         # total        used        free      shared  buff/cache   available
+>         # Mem:       32857708     1751052    26233476      259812     4873180    30552020
+>         # Swap:             0           0           0
+> 
+> 		"linux" => q{ print (1024*((grep /Mem:/, `free`)[0] =~ /Mem:(?:\s+\S+){5}\s+(\S+)/)[0]) },
