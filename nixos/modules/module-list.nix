@@ -44,8 +44,8 @@
   ./installer/tools/nixos-checkout.nix
   ./installer/tools/tools.nix
   ./misc/assertions.nix
-  ./misc/check-config.nix
   ./misc/crashdump.nix
+  ./misc/extra-arguments.nix
   ./misc/ids.nix
   ./misc/lib.nix
   ./misc/locate.nix
@@ -147,9 +147,12 @@
   ./services/desktops/telepathy.nix
   ./services/games/ghost-one.nix
   ./services/games/minecraft-server.nix
+  ./services/games/minetest-server.nix
   ./services/hardware/acpid.nix
+  ./services/hardware/actkbd.nix
   ./services/hardware/amd-hybrid-graphics.nix
   ./services/hardware/bluetooth.nix
+  ./services/hardware/brltty.nix
   ./services/hardware/freefall.nix
   ./services/hardware/nvidia-optimus.nix
   ./services/hardware/pcscd.nix
@@ -183,6 +186,7 @@
   ./services/misc/canto-daemon.nix
   ./services/misc/cpuminer-cryptonight.nix
   ./services/misc/cgminer.nix
+  ./services/misc/confd.nix
   ./services/misc/dictd.nix
   ./services/misc/disnix.nix
   ./services/misc/docker-registry.nix
@@ -192,6 +196,8 @@
   ./services/misc/gitlab.nix
   ./services/misc/gitolite.nix
   ./services/misc/gpsd.nix
+  ./services/misc/ihaskell.nix
+  ./services/misc/mbpfan.nix
   ./services/misc/mediatomb.nix
   ./services/misc/mesos-master.nix
   ./services/misc/mesos-slave.nix
@@ -201,6 +207,7 @@
   ./services/misc/nix-ssh-serve.nix
   ./services/misc/parsoid.nix
   ./services/misc/phd.nix
+  ./services/misc/plex.nix
   ./services/misc/redmine.nix
   ./services/misc/rippled.nix
   ./services/misc/ripple-data-api.nix
@@ -225,6 +232,7 @@
   ./services/monitoring/smartd.nix
   ./services/monitoring/statsd.nix
   ./services/monitoring/systemhealth.nix
+  ./services/monitoring/teamviewer.nix
   ./services/monitoring/ups.nix
   ./services/monitoring/uptime.nix
   ./services/monitoring/zabbix-agent.nix
@@ -239,6 +247,7 @@
   ./services/network-filesystems/yandex-disk.nix
   ./services/networking/aiccu.nix
   ./services/networking/amuled.nix
+  ./services/networking/asterisk.nix
   ./services/networking/atftpd.nix
   ./services/networking/avahi-daemon.nix
   ./services/networking/bind.nix
@@ -266,10 +275,12 @@
   ./services/networking/haproxy.nix
   ./services/networking/hostapd.nix
   ./services/networking/i2pd.nix
+  ./services/networking/i2p.nix
   ./services/networking/ifplugd.nix
   ./services/networking/iodined.nix
   ./services/networking/ircd-hybrid/default.nix
   ./services/networking/kippo.nix
+  ./services/networking/lambdabot.nix
   ./services/networking/mailpile.nix
   ./services/networking/minidlna.nix
   ./services/networking/mstpd.nix
@@ -334,6 +345,7 @@
   ./services/security/fprot.nix
   ./services/security/frandom.nix
   ./services/security/haveged.nix
+  ./services/security/hologram.nix
   ./services/security/munge.nix
   ./services/security/torify.nix
   ./services/security/tor.nix
@@ -408,6 +420,9 @@
   ./system/boot/stage-1.nix
   ./system/boot/stage-2.nix
   ./system/boot/systemd.nix
+  ./system/boot/networkd.nix
+  ./system/boot/resolved.nix
+  ./system/boot/timesyncd.nix
   ./system/boot/tmp.nix
   ./system/etc/etc.nix
   ./system/upstart/upstart.nix
@@ -421,6 +436,7 @@
   ./tasks/filesystems/f2fs.nix
   ./tasks/filesystems/jfs.nix
   ./tasks/filesystems/nfs.nix
+  ./tasks/filesystems/ntfs.nix
   ./tasks/filesystems/reiserfs.nix
   ./tasks/filesystems/unionfs-fuse.nix
   ./tasks/filesystems/vfat.nix
