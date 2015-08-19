@@ -45,7 +45,7 @@ in
       };
 
       servers = mkOption {
-        type = types.listOf types.string;
+        type = types.listOf types.str;
         default = [];
         example = [ "8.8.8.8" "8.8.4.4" ];
         description = ''
@@ -98,6 +98,7 @@ in
           ExecStart = "${dnsmasq}/bin/dnsmasq -k --enable-dbus --user=dnsmasq -C ${dnsmasqConf}";
           ExecReload = "${dnsmasq}/bin/kill -HUP $MAINPID";
         };
+        restartTriggers = [ config.environment.etc.hosts.source ];
     };
 
   };

@@ -1,15 +1,15 @@
-{ stdenv, fetchurl, attr }:
+{ stdenv, fetchurl, attr, keyutils }:
 
-let version = "0.04.00"; in
+let version = "0.04.14"; in
 stdenv.mkDerivation rec {
   name = "stress-ng-${version}";
 
   src = fetchurl {
-    sha256 = "1rivmqa3qy9saxcz7mg211imcfyfwdhyhl2z6k1zc55vhnjdwhih";
+    sha256 = "17lgsxg2k7w12i1wmzq4zqavkicikzkgz2h7mzl8lrk8c85mwf3m";
     url = "http://kernel.ubuntu.com/~cking/tarballs/stress-ng/${name}.tar.gz";
   };
 
-  buildInputs = [ attr ];
+  buildInputs = [ attr keyutils ];
 
   patchPhase = ''
     substituteInPlace Makefile --replace "/usr" ""
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  installFlags = [ "DESTDIR=$(out)" ];
+  installFlags = "DESTDIR=$(out)";
 
   meta = with stdenv.lib; {
     inherit version;
@@ -34,7 +34,8 @@ stdenv.mkDerivation rec {
       bugs that only occur when a system is being thrashed hard.
     '';
     homepage = http://kernel.ubuntu.com/~cking/stress-ng;
-    license = with licenses; gpl2Plus;
+    downloadPage = http://kernel.ubuntu.com/~cking/tarballs/stress-ng/;
+    license = licenses.gpl2Plus;
     platforms = with platforms; linux;
     maintainers = with maintainers; [ nckx ];
   };

@@ -98,6 +98,9 @@ in zipModules ([]
 ++ obsolete [ "boot" "initrd" "extraKernelModules" ] [ "boot" "initrd" "kernelModules" ]
 ++ obsolete [ "boot" "extraKernelParams" ] [ "boot" "kernelParams" ]
 
+# smartd
+++ obsolete [ "services" "smartd" "deviceOpts" ] [ "services" "smartd" "defaults" "monitored" ]
+
 # OpenSSH
 ++ obsolete [ "services" "sshd" "ports" ] [ "services" "openssh" "ports" ]
 ++ alias [ "services" "sshd" "enable" ] [ "services" "openssh" "enable" ]
@@ -109,7 +112,14 @@ in zipModules ([]
 ++ obsolete [ "services" "xserver" "startOpenSSHAgent" ] [ "programs" "ssh" "startAgent" ]
 
 # VirtualBox
-++ obsolete [ "services" "virtualbox" "enable" ] [ "services" "virtualboxGuest" "enable" ]
+++ obsolete [ "services" "virtualbox" "enable" ] [ "virtualisation" "virtualbox" "guest" "enable" ]
+++ obsolete [ "services" "virtualboxGuest" "enable" ] [ "virtualisation" "virtualbox" "guest" "enable" ]
+++ obsolete [ "programs" "virtualbox" "enable" ] [ "virtualisation" "virtualbox" "host" "enable" ]
+++ obsolete [ "programs" "virtualbox" "addNetworkInterface" ] [ "virtualisation" "virtualbox" "host" "addNetworkInterface" ]
+++ obsolete [ "programs" "virtualbox" "enableHardening" ] [ "virtualisation" "virtualbox" "host" "enableHardening" ]
+++ obsolete [ "services" "virtualboxHost" "enable" ] [ "virtualisation" "virtualbox" "host" "enable" ]
+++ obsolete [ "services" "virtualboxHost" "addNetworkInterface" ] [ "virtualisation" "virtualbox" "host" "addNetworkInterface" ]
+++ obsolete [ "services" "virtualboxHost" "enableHardening" ] [ "virtualisation" "virtualbox" "host" "enableHardening" ]
 
 # Tarsnap
 ++ obsolete [ "services" "tarsnap" "config" ] [ "services" "tarsnap" "archives" ]
@@ -141,6 +151,9 @@ in zipModules ([]
 ++ obsolete [ "services" "xserver" "windowManager" "xbmc" ] [ "services" "xserver" "desktopManager" "kodi" ]
 ++ obsolete [ "services" "xserver" "desktopManager" "xbmc" ] [ "services" "xserver" "desktopManager" "kodi" ]
 
+# DNSCrypt-proxy
+++ obsolete [ "services" "dnscrypt-proxy" "port" ] [ "services" "dnscrypt-proxy" "localPort" ]
+
 # Options that are obsolete and have no replacement.
 ++ obsolete' [ "boot" "loader" "grub" "bootDevice" ]
 ++ obsolete' [ "boot" "initrd" "luks" "enable" ]
@@ -148,5 +161,6 @@ in zipModules ([]
 ++ obsolete' [ "services" "samba" "defaultShare" ]
 ++ obsolete' [ "services" "syslog-ng" "serviceName" ]
 ++ obsolete' [ "services" "syslog-ng" "listenToJournal" ]
+++ obsolete' [ "ec2" "metadata" ]
 
 )

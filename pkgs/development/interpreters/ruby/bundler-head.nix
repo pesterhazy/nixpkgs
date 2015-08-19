@@ -1,11 +1,11 @@
 { buildRubyGem, coreutils, fetchgit }:
 
 buildRubyGem {
-  name = "bundler-HEAD";
+  name = "bundler-2015-01-11";
   src = fetchgit {
     url = "https://github.com/bundler/bundler.git";
     rev = "a2343c9eabf5403d8ffcbca4dea33d18a60fc157";
-    sha256 = "0q7cjmz1fsrw3yfsr3h274qjamwnw01xgaqq3h5cjbqlrni4iq7k";
+    sha256 = "1vzm21fc37w89psxfk2fzi64zyb3gyhzr9smd6jk2r2kvgp6d38b";
     leaveDotGit = true;
   };
   dontPatchShebangs = true;

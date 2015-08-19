@@ -13,13 +13,13 @@ let
 in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
-  version = "3.10";
+  version = "3.12.1";
 
   src = fetchFromGitHub {
     owner = "facebook";
     repo = "rocksdb";
-    rev = "v${version}";
-    sha256 = "1px345x9cyaxyjlzsf3bcxixvfaxn9x3ysq7biajyfhk8wq1n4p0";
+    rev = "rocksdb-${version}";
+    sha256 = "0692jlnakwd5c1h6czd3l7rxhz514whpixyd8y805bnkj2ag61sa";
   };
 
   buildInputs = [ snappy google-gflags zlib bzip2 lz4 numactl malloc ];
@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
   # Environment vars used for building certain configurations
   PORTABLE = "1";
   USE_SSE = "1";
+  CMAKE_CXX_FLAGS = "-std=gnu++11";
   JEMALLOC_LIB = stdenv.lib.optionalString (malloc == jemalloc) "-ljemalloc";
 
   buildFlags = [

@@ -2,9 +2,7 @@
 
 {
   _module.args = {
-    modulesPath = ../.;
-
-    pkgs_i686 = import ../../lib/nixpkgs.nix {
+    pkgs_i686 = import ../../.. {
       system = "i686-linux";
       config.allowUnfree = true;
     };
